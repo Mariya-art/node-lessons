@@ -4,7 +4,7 @@
   "description": "",
   "main": "helloworld.js",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "node lesson1/index.js"
   },
   "type": "module",
   "author": "",
