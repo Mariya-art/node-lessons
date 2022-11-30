@@ -69,6 +69,9 @@ const readStream = fs.createReadStream(ACCESS_LOG, {    // функция, ко�
 //     console.log('chunk:', chunk);
 // });
 
+// readStream.on('end', () => console.log('File reading is finished')); // когда чтение файла закончено
+// readStream.on('error', err => console.error(err.message)); // обработка ошибок
+
 //* ЗАПИСЬ ЧЕРЕЗ ПОТОКИ
 const writeStream = fs.createWriteStream(ACCESS_LOG, {
     encoding: 'utf-8',
@@ -80,6 +83,7 @@ const writeStream = fs.createWriteStream(ACCESS_LOG, {
 // });
 
 // writeStream.end(); // заканчиваем писать в файл и он закрывается
+// writeStream.end(() => console.log('File reading is finished')); //  когда чтение файла закончено выводим надпись
 
 //* Класс Transform
 // Платный аккаунт видит IP-адреса, а бесплатный не видит IP-адреса

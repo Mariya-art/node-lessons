@@ -4,13 +4,18 @@
   "description": "",
   "main": "helloworld.js",
   "scripts": {
-    "dev": "node lesson1/index.js"
+    "dev": "node ./lesson4/3-read-with-yargs.js"
+  },
+  "bin": {
+    "reader": "./lesson4/8-cli.js"
   },
   "type": "module",
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "inquirer": "^9.1.4",
+    "yargs": "^17.6.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.9"
