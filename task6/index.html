@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Messanger</title>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"
+        integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>Messanger</h1>
+    <p>Сейчас в чате:<span id="count"></span></p>
+    <br>
+    <p>Укажите ваше имя и начинайте переписку</p>
+    <input type="text" id="name" placeholder="Имя" autofocus/>
+    <br><br>
+    <input type="text" id="input" placeholder="Сообщение"/>
+    <input type="submit" id="send" value="Send" />
+    <div id="messages"></div>
+</body>
+<script type="text/javascript">
+    const socket = io('localhost:3000');
+
+    socket.on('connect', () => {
+        let room = 'global room';
+        let userName = Math.floor(Math.random() * (99999999 - 100 + 1)) + 100; // присваиваем клиенту рандомный ник при коннекте на случай, если он потом не укажет имя 
+
+        socket.emit('global room', {
+            room: room,
+            name: userName,
+        });
+    })
+    
+    socket.on('count-msg', ({ count, connectMes }) => {
+        document.getElementById('count').innerHTML = `${count}`;
+        const msgSpan = document.createElement('span').innerHTML = `${connectMes}`;
+        document.getElementById('messages').append(msgSpan);
+        document.getElementById('messages').append(document.createElement('br'));
+    });
+
+    socket.on('server-msg', ({ name, msg }) => {
+        const msgSpan = document.createElement('span').innerHTML = `${name}: ${msg}`;
+        document.getElementById('messages').append(msgSpan);
+        document.getElementById('messages').append(document.createElement('br'));
+    });
+
+    document.getElementById('send')
+        .onclick = function () {
+            socket.emit('client-msg', {  
+                name: document.getElementById('name').value,
+                msg: document.getElementById('input').value,
+            })
+            document.getElementById('input').value = '';
+        };
+</script>
+
+</html>
